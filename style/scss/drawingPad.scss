@@ -1,0 +1,12 @@
+#drawingPad{
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	#drawingPadCanvas {
+		border: 1px solid #888;
+		border-radius: 5px;
+		touch-action: none;
+	}
+}

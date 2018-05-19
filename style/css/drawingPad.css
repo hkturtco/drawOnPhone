@@ -1,0 +1,10 @@
+#drawingPad {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  #drawingPad #drawingPadCanvas {
+    border: 1px solid #888;
+    border-radius: 5px;
+    touch-action: none; }
+
+/*# sourceMappingURL=drawingPad.css.map */
