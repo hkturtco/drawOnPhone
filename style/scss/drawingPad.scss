@@ -9,7 +9,7 @@
 		border: 1px solid #888;
 		border-radius: 5px;
 		touch-action: none;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 		box-shadow: 2px 2px 5px #000;
 	}
 
@@ -18,9 +18,22 @@
 		flex-wrap: nowrap;
 		align-items: center;
 		justify-content: center;
+		margin-bottom: 10px;
 
 		input {
 			width: 80px;
+		}
+	}
+
+	#fileSaveButt{
+		width: 100%;
+
+		button {
+			width: 100%;
+			background-color: #cf9;
+			border-radius: 10px;
+			padding: 10px;
+			border: none;
 		}
 	}
 }

@@ -21,7 +21,7 @@
 					<p>DrawOnPhone</p>
 				</div>
 				<div id="modeButt">
-					<button id="toolbarPenButt"><i class="fas fa-paint-brush"></i></button>
+					<button id="toolbarPenButt" class="on"><i class="fas fa-paint-brush"></i></button>
 					<button id="toolbarCircleButt"><i class="fas fa-circle"></i></button>
 					<button id="toolbarSqaureButt"><i class="fas fa-square"></i></button>
 					<button id="toolbarEeaserButt"><i class="fas fa-eraser"></i></button>
@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div id="drawingPad">
-				<canvas id="drawingPadCanvas" width="300px" height="400px"></canvas>
+				<canvas id="drawingPadCanvas" width="300px" height="350px"></canvas>
 				<div id="rgbInput">
 					<label for="rColor">R</label>
 					<input id="rColor" type="range" min="10" max="200" value="100" step="10">
@@ -41,6 +41,7 @@
 					<label for="bColor">B</label>
 					<input id="bColor" type="range" min="10" max="200" value="100" step="10">
 				</div>
+				<a id="fileSaveButt" href="" download="download.png"><button>SAVE</button></a>
 			</div>
 			<div id="prompt">
 				<p id="promptMessage"><p>

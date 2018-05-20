@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', function () {
 	const rColor = document.getElementById('rColor');
 	const gColor = document.getElementById('gColor');
 	const bColor = document.getElementById('bColor');
+	const fileSaveButt = document.getElementById('fileSaveButt');
 	const promptVar = {
 		do: (message) => {
 			let prompt = document.getElementById('prompt');
@@ -39,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		preX: 0,
 		preY: 0,
 		savedImage: null,
-		penMode: false,
+		penMode: true,
 		circleMode: false,
 		squareMode: false,
 		eraseMode: false,
@@ -185,7 +186,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			ele.value = 100;
 
-			
+		},
+		exportImage: (e) => {
+			let canvas = drawingPadVar.canvas;
+			let imageDataUrl = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
+
+			e.currentTarget.href = imageDataUrl;
 		},
 		init: () => {
 
@@ -208,12 +214,16 @@ window.addEventListener('DOMContentLoaded', function () {
 			gColor.addEventListener("change", drawingPad.changeRGB);
 			bColor.addEventListener("change", drawingPad.changeRGB);
 
+			fileSaveButt.addEventListener("click", drawingPad.exportImage);
+
 			drawingPadVar.canvas.addEventListener("touchstart", drawingPad.touchstartEvent);
-			//drawingPadVar.canvas.addEventListener("mousedown", drawingPad.touchstartEvent);
 			drawingPadVar.canvas.addEventListener("touchmove", drawingPad.touchmoveEvent);
-			//drawingPadVar.canvas.addEventListener("mousemove", drawingPad.touchmoveEvent);
 			drawingPadVar.canvas.addEventListener("mouseup", drawingPad.touchendEvent);
+
+			//drawingPadVar.canvas.addEventListener("mousedown", drawingPad.touchstartEvent);
+			//drawingPadVar.canvas.addEventListener("mousemove", drawingPad.touchmoveEvent);
 			//drawingPadVar.canvas.addEventListener("touchend", drawingPad.touchendEvent);
+			
 
 		}
 	};
