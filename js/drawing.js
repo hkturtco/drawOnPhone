@@ -62,7 +62,8 @@ var drawLine = {
 				ctx.moveTo(preX, preY);
 				ctx.save();
 				ctx.strokeStyle = "#000";
-				ctx.lineWidth = preLineWidth + 0.1;
+				ctx.lineWidth = preLineWidth + ((lineWidth - preLineWidth)/4);
+				ctx.lineCap = 'round';
 				ctx.lineTo(preX + ((x - preX)/4), preY+ ((y - preY)/4));
 				ctx.stroke();
 				ctx.closePath();
@@ -72,7 +73,8 @@ var drawLine = {
 				ctx.moveTo(preX + ((x - preX)/4), preY+ ((y - preY)/4));
 				ctx.save();
 				ctx.strokeStyle = "#000";
-				ctx.lineWidth = preLineWidth + 0.2;
+				ctx.lineWidth = preLineWidth + ((lineWidth - preLineWidth)*2/4);
+				ctx.lineCap = 'round';
 				ctx.lineTo(preX + ((x - preX)*2/4), preY+ ((y - preY)*2/4));
 				ctx.stroke();
 				ctx.closePath();		
@@ -82,7 +84,8 @@ var drawLine = {
 				ctx.moveTo(preX + ((x - preX)*2/4), preY+ ((y - preY)*2/4));
 				ctx.save();
 				ctx.strokeStyle = "#000";
-				ctx.lineWidth = preLineWidth + 0.3;
+				ctx.lineWidth = preLineWidth + ((lineWidth - preLineWidth)*3/4);
+				ctx.lineCap = 'round';
 				ctx.lineTo(preX + ((x - preX)*3/4), preY+ ((y - preY)*3/4));
 				ctx.stroke();
 				ctx.closePath();		
@@ -93,6 +96,7 @@ var drawLine = {
 				ctx.save();
 				ctx.strokeStyle = "#000";
 				ctx.lineWidth = lineWidth;
+				ctx.lineCap = 'round';
 				ctx.lineTo(x, y);
 				ctx.stroke();
 				ctx.closePath();		
@@ -104,13 +108,6 @@ var drawLine = {
 			// 	oriPreX = preX;
 			// 	oriPreY = preY;
 			// }
-
-			ctx.beginPath();
-			ctx.save();
-			ctx.fillStyle = "#000";
-			ctx.arc(x, y, lineWidth/2, 0, 2*Math.PI);
-			ctx.fill();
-			ctx.restore();
 		}
 	},
 	end: (mode, ctx, x, y, lineWidth) =>{

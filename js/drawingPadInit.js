@@ -46,6 +46,11 @@ window.addEventListener('DOMContentLoaded', function () {
 		eraseMode: false,
 		lineWidth: 0,
 		preLineWidth: 0,
+		forwardX: true,
+		forwardY: true,
+		preforwardX: null,
+		preforwardY: null,
+		changeDirect: false,
 		touchstartEvent: (event) => {
 			drawingPad.touching = true;
 			let ctx = drawingPadVar.context;
@@ -57,7 +62,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			drawingPad.startY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
 			drawingPad.preX = event.pageX - drawingPadVar.offsetH || event.touches[0].pageX-drawingPadVar.offsetH;
 			drawingPad.preY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
-			drawingPad.preLineWidth = 0.1;
+			drawingPad.preLineWidth = 0;
 
 			console.log(">>>");
 		},
@@ -76,7 +81,27 @@ window.addEventListener('DOMContentLoaded', function () {
 				let diffY = Math.abs(curY- startY);
 				let preX = drawingPad.preX;
 				let preY = drawingPad.preY;
-				let lineWidth = drawingPad.preLineWidth < 3? drawingPad.preLineWidth + 0.4 : drawingPad.preLineWidth;
+				let lineWidth;
+				if (preX - curX > 0) {drawingPad.forwardX = true;} else if (preX - curX < 0)  {drawingPad.forwardX = false;} 
+				if (preY - curY > 0) {drawingPad.forwardY = true;} else if (preX - curX < 0)  {drawingPad.forwardY = false;}
+
+				if((drawingPad.preforwardX !== null && drawingPad.forwardX !== drawingPad.preforwardX) ||
+					(drawingPad.preforwardY !== null && (drawingPad.forwardY !== drawingPad.preforwardY))){
+					drawingPad.changeDirect = !drawingPad.changeDirect;
+					console.log("fire");
+				}
+
+				if(drawingPad.changeDirect){
+					if(drawingPad.preLineWidth > 2){
+						lineWidth = drawingPad.preLineWidth - 0.4;
+					} else if(drawingPad.preLineWidth < 2){
+						lineWidth = drawingPad.preLineWidth + 0.4;
+					} else {
+						lineWidth = drawingPad.preLineWidth;
+					}
+				} else {
+					lineWidth = drawingPad.preLineWidth < 6? drawingPad.preLineWidth + 0.4 : drawingPad.preLineWidth;
+				}
 				let preLineWidth = drawingPad.preLineWidth;
 				
 				drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
@@ -87,7 +112,9 @@ window.addEventListener('DOMContentLoaded', function () {
 				drawingPad.preX = curX;
 				drawingPad.preY = curY;
 				drawingPad.preLineWidth = lineWidth;
-				console.log("---",  lineWidth, preLineWidth);
+				drawingPad.preforwardX = drawingPad.forwardX;
+				drawingPad.preforwardY = drawingPad.forwardY;
+				//console.log("---",  curY, preY);
 			}
 		},
 		touchendEvent: (event) => {
