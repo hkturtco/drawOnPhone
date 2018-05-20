@@ -11,6 +11,15 @@ body {
   height: 100%;
   align-items: center;
   justify-content: center;
-  margin: 0; }
+  margin: 0;
+  flex-direction: column; }
+  #main #footer {
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    margin-top: 10px;
+    width: 75%;
+    font-size: 10px;
+    text-align: center; }
 
 /*# sourceMappingURL=main.css.map */
