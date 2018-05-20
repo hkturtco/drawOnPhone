@@ -14,11 +14,12 @@ $black: #000;
 		display: inline-block;
 
 		button{
-			border-radius: 5px;
+			border-radius: 10px;
 			padding: 10px;
 			outline: none;
 			color: #000;
-			background-color: #f87;
+			background-color: #fa9;
+			border: none;
 
 			&.on {
 				background-color: rgba($black, 0.7);
@@ -36,12 +37,12 @@ $black: #000;
 		}
 
 		button{
-			border-radius: 5px;
+			border-radius: 10px;
 			padding: 10px;
 			outline: none;
 			color: #000;
-			background-color: #f3a;
-
+			background-color: #f8a;
+			border: none;
 
 			&.on {
 				background-color: rgba($black, 0.7);

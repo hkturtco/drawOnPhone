@@ -119,15 +119,23 @@ window.addEventListener('DOMContentLoaded', function () {
 			switch(ele.id){
 				case "toolbarPenButt":
 					drawingPad.penMode = !drawingPad.penMode;
+					var modeMessage = drawingPad.penMode? "On" : "Off";
+					promptVar.do("Pen: " + modeMessage);
 					break;
 				case "toolbarCircleButt":
 					drawingPad.circleMode = !drawingPad.circleMode;
+					var modeMessage = drawingPad.circleMode? "On" : "Off";
+					promptVar.do("Circle: " + modeMessage);
 					break;
 				case "toolbarSqaureButt":
 					drawingPad.squareMode = !drawingPad.squareMode;
+					var modeMessage = drawingPad.squareMode? "On" : "Off";
+					promptVar.do("Square: " + modeMessage);
 					break;
 				case "toolbarEeaserButt":
 					drawingPad.eraseMode = !drawingPad.eraseMode;
+					var modeMessage = drawingPad.eraseMode? "On" : "Off";
+					promptVar.do("Eraser: " + modeMessage);
 					break;
 			}
 		},
@@ -153,7 +161,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			fileImage.src = URL.createObjectURL(e.target.files[0]);
 			
 		},
-		changeRGB: (e) => {
+		changeRGB: async (e) => {
 			let ele = e.currentTarget;
 			let ctx = drawingPadVar.context;
 			let width = drawingPadVar.width;
@@ -163,15 +171,15 @@ window.addEventListener('DOMContentLoaded', function () {
 			switch(ele.id){
 				case "rColor":
 					promptVar.do("R: " + showValue + "%");
-					changedColor.do(ctx, "r", ele.value, width, height);
+					await changedColor.do(ctx, "r", ele.value, width, height);
 					break;
 				case "gColor":
 					promptVar.do("G: " + showValue + "%");
-					changedColor.do(ctx, "g", ele.value, width, height);
+					await changedColor.do(ctx, "g", ele.value, width, height);
 					break;
 				case "bColor":
 					promptVar.do("B: " + showValue + "%");
-					changedColor.do(ctx, "b", ele.value, width, height);
+					await changedColor.do(ctx, "b", ele.value, width, height);
 					break;
 			}
 

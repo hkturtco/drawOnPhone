@@ -10,7 +10,9 @@
     margin-bottom: 20px; }
   #drawingPad #rgbInput {
     display: flex;
-    flex-wrap: nowrap; }
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center; }
     #drawingPad #rgbInput input {
       width: 80px; }
 
