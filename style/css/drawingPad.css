@@ -6,11 +6,11 @@
   #drawingPad #drawingPadCanvas {
     border: 1px solid #888;
     border-radius: 5px;
-    touch-action: none; }
+    touch-action: none;
+    margin-bottom: 20px; }
   #drawingPad #rgbInput {
     display: flex;
-    flex-wrap: nowrap;
-    z-index: 100; }
+    flex-wrap: nowrap; }
     #drawingPad #rgbInput input {
       width: 80px; }
 

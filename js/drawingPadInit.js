@@ -9,6 +9,17 @@ window.addEventListener('DOMContentLoaded', function () {
 	const rColor = document.getElementById('rColor');
 	const gColor = document.getElementById('gColor');
 	const bColor = document.getElementById('bColor');
+	const promptVar = {
+		do: (message) => {
+			let prompt = document.getElementById('prompt');
+			let promptMessage = document.getElementById('promptMessage');
+			prompt.style.zIndex = 999;
+			prompt.style.opacity = 1;
+			promptMessage.innerHTML = message;
+			setTimeout(()=>{prompt.style.opacity = 0;prompt.style.zIndex = -999;}, 2000);
+		}
+	};
+
 	var drawingPadVar = {
 		canvas : document.getElementById("drawingPadCanvas")
 	}
@@ -147,20 +158,26 @@ window.addEventListener('DOMContentLoaded', function () {
 			let ctx = drawingPadVar.context;
 			let width = drawingPadVar.width;
 			let height = drawingPadVar.height;
+			let showValue = ele.value - 100 > 0? "+" + String(ele.value - 100) : ele.value - 100; 
 			
 			switch(ele.id){
 				case "rColor":
+					promptVar.do("R: " + showValue + "%");
 					changedColor.do(ctx, "r", ele.value, width, height);
 					break;
 				case "gColor":
+					promptVar.do("G: " + showValue + "%");
 					changedColor.do(ctx, "g", ele.value, width, height);
 					break;
 				case "bColor":
+					promptVar.do("B: " + showValue + "%");
 					changedColor.do(ctx, "b", ele.value, width, height);
 					break;
 			}
 
 			ele.value = 100;
+
+			
 		},
 		init: () => {
 
