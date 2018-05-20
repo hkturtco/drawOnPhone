@@ -52,40 +52,43 @@ window.addEventListener('DOMContentLoaded', function () {
 			let height = drawingPadVar.height;
 
 			drawingPad.savedImage = ctx.getImageData(0, 0, width, height);
-			drawingPad.startX = event.touches[0].pageX-drawingPadVar.offsetH;
-			drawingPad.startY = event.touches[0].pageY-drawingPadVar.offsetV;
-			drawingPad.preX = event.touches[0].pageX-drawingPadVar.offsetH;
-			drawingPad.preY = event.touches[0].pageY-drawingPadVar.offsetV;
+			drawingPad.startX = event.pageX - drawingPadVar.offsetH ||  event.touches[0].pageX-drawingPadVar.offsetH;
+			drawingPad.startY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
+			drawingPad.preX = event.pageX - drawingPadVar.offsetH || event.touches[0].pageX-drawingPadVar.offsetH;
+			drawingPad.preY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
 			drawingPad.lineWidth = 0.1;
 
 			console.log(">>>");
 		},
 		touchmoveEvent: (event) => {
-			event.preventDefault();
-			let startX = drawingPad.startX;
-			let startY = drawingPad.startY;
-			let curX = event.touches[0].pageX-drawingPadVar.offsetH;
-			let curY = event.touches[0].pageY-drawingPadVar.offsetV;
-			let width = drawingPadVar.width;
-			let height = drawingPadVar.height;
-			let ctx = drawingPadVar.context;
-			let diffX = Math.abs(curX - startX);
-			let diffY = Math.abs(curY- startY);
-			let preX = drawingPad.preX;
-			let preY = drawingPad.preY;
-			let lineWidth = drawingPad.lineWidth;
-			
-			drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
-			drawSquare.render(drawingPad.squareMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
-			drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY, lineWidth);
-			eraseLine.do(drawingPad.eraseMode, ctx, curX, curY, preX, preY);
 
-			drawingPad.endX = curX;
-			drawingPad.endY = curY;
-			drawingPad.preX = curX;
-			drawingPad.preY = curY;
-			drawingPad.lineWidth = lineWidth < 3? lineWidth + 0.8 : lineWidth;
-			console.log("---",  drawingPad.startX, drawingPad.startY);
+			if(drawingPad.touching){
+				event.preventDefault();
+				let startX = drawingPad.startX;
+				let startY = drawingPad.startY;
+				let curX = event.pageX - drawingPadVar.offsetH || event.touches[0].pageX-drawingPadVar.offsetH;
+				let curY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
+				let width = drawingPadVar.width;
+				let height = drawingPadVar.height;
+				let ctx = drawingPadVar.context;
+				let diffX = Math.abs(curX - startX);
+				let diffY = Math.abs(curY- startY);
+				let preX = drawingPad.preX;
+				let preY = drawingPad.preY;
+				let lineWidth = drawingPad.lineWidth;
+				
+				drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
+				drawSquare.render(drawingPad.squareMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
+				drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY, lineWidth);
+				eraseLine.do(drawingPad.eraseMode, ctx, curX, curY, preX, preY);
+
+				drawingPad.endX = curX;
+				drawingPad.endY = curY;
+				drawingPad.preX = curX;
+				drawingPad.preY = curY;
+				drawingPad.lineWidth = lineWidth < 3? lineWidth + 0.8 : lineWidth;
+				console.log("---",  drawingPad.startX, drawingPad.startY);
+			}
 		},
 		touchendEvent: (event) => {
 			drawingPad.touching = false;
@@ -228,9 +231,9 @@ window.addEventListener('DOMContentLoaded', function () {
 			drawingPadVar.canvas.addEventListener("touchmove", drawingPad.touchmoveEvent);
 			drawingPadVar.canvas.addEventListener("mouseup", drawingPad.touchendEvent);
 
-			//drawingPadVar.canvas.addEventListener("mousedown", drawingPad.touchstartEvent);
-			//drawingPadVar.canvas.addEventListener("mousemove", drawingPad.touchmoveEvent);
-			//drawingPadVar.canvas.addEventListener("touchend", drawingPad.touchendEvent);
+			drawingPadVar.canvas.addEventListener("mousedown", drawingPad.touchstartEvent);
+			drawingPadVar.canvas.addEventListener("mousemove", drawingPad.touchmoveEvent);
+			drawingPadVar.canvas.addEventListener("touchend", drawingPad.touchendEvent);
 			
 
 		}
