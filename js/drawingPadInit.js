@@ -1,5 +1,14 @@
 window.addEventListener('DOMContentLoaded', function () {
 
+	const toolbarPenButt = document.getElementById("toolbarPenButt");
+	const toolbarCircleButt = document.getElementById("toolbarCircleButt");
+	const toolbarSqaureButt = document.getElementById("toolbarSqaureButt");
+	const toolbarEeaserButt = document.getElementById("toolbarEeaserButt");
+	const filegetButt = document.getElementById("filegetButt");
+	const fileInput = document.getElementById('imageInput');
+	const rColor = document.getElementById('rColor');
+	const gColor = document.getElementById('gColor');
+	const bColor = document.getElementById('bColor');
 	var drawingPadVar = {
 		canvas : document.getElementById("drawingPadCanvas")
 	}
@@ -138,18 +147,20 @@ window.addEventListener('DOMContentLoaded', function () {
 			let ctx = drawingPadVar.context;
 			let width = drawingPadVar.width;
 			let height = drawingPadVar.height;
-			console.log(e.currentTarget.value);
+			
 			switch(ele.id){
 				case "rColor":
-					changedColor.do(ctx, "r", e.currentTarget.value, width, height);
+					changedColor.do(ctx, "r", ele.value, width, height);
 					break;
 				case "gColor":
-					changedColor.do(ctx, "g", e.currentTarget.value, width, height);
+					changedColor.do(ctx, "g", ele.value, width, height);
 					break;
 				case "bColor":
-					changedColor.do(ctx, "b", e.currentTarget.value, width, height);
+					changedColor.do(ctx, "b", ele.value, width, height);
 					break;
 			}
+
+			ele.value = 100;
 		},
 		init: () => {
 
@@ -157,24 +168,8 @@ window.addEventListener('DOMContentLoaded', function () {
 			let width = drawingPadVar.width;
 			let height = drawingPadVar.height;
 
-			for(var i=0; i< height; i++){
-				for(var j=0; j< width; j++){
-					r = 255;
-					g = 255;	
-					b = 255;		
-					ctx.fillStyle = "rgba("+r+","+g+","+b+", 1)"; 
-					ctx.fillRect( j, i, 1, 1 );
-				}
-			}
-			const toolbarPenButt = document.getElementById("toolbarPenButt");
-			const toolbarCircleButt = document.getElementById("toolbarCircleButt");
-			const toolbarSqaureButt = document.getElementById("toolbarSqaureButt");
-			const toolbarEeaserButt = document.getElementById("toolbarEeaserButt");
-			const filegetButt = document.getElementById("filegetButt");
-			const fileInput = document.getElementById('imageInput');
-			const rColor = document.getElementById('rColor');
-			const gColor = document.getElementById('gColor');
-			const bColor = document.getElementById('bColor');
+			ctx.fillStyle = "white";
+			ctx.fillRect(0, 0, width, height);
 
 			toolbarPenButt.addEventListener("click", drawingPad.switchMode);
 			toolbarCircleButt.addEventListener("click", drawingPad.switchMode);

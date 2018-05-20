@@ -2,9 +2,12 @@
 
 <html>
 	<head>
+		<title>DrawOnPhone</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="style/css/main.css">
 		<link rel="stylesheet" type="text/css" href="style/css/toolbar.css">
 		<link rel="stylesheet" type="text/css" href="style/css/drawingPad.css"> 
+		<link rel="stylesheet" type="text/css" href="style/css/prompt.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="js/drawingPadInit.js"></script>
@@ -28,12 +31,17 @@
 			<div id="drawingPad">
 				<canvas id="drawingPadCanvas" width="300px" height="400px"></canvas>
 				<div id="rgbInput">
-					<input id="rColor" type="range" min="1" max="500" value="100">
-					<input id="gColor" type="range" min="1" max="500" value="100">
-					<input id="bColor" type="range" min="1" max="500" value="100">
+					<label for="rColor">R</label>
+					<input id="rColor" type="range" min="1" max="200" value="100" step="10">
+					<label for="gColor">G</label>
+					<input id="gColor" type="range" min="1" max="200" value="100" step="10">
+					<label for="bColor">B</label>
+					<input id="bColor" type="range" min="1" max="200" value="100" step="10">
 				</div>
 			</div>
-			
+			<div id="prompt">
+				<p id="promptMessage">123<p>
+			</div>
 		</div>
 	</body>
 </html>

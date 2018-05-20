@@ -12,7 +12,8 @@
     #toolbar #modeButt button {
       border-radius: 5px;
       padding: 10px;
-      outline: none; }
+      outline: none;
+      color: #000; }
       #toolbar #modeButt button.on {
         background-color: rgba(0, 0, 0, 0.7);
         color: #fff;
@@ -24,7 +25,8 @@
     #toolbar #filebar button {
       border-radius: 5px;
       padding: 10px;
-      outline: none; }
+      outline: none;
+      color: #000; }
       #toolbar #filebar button.on {
         background-color: rgba(0, 0, 0, 0.7);
         color: #fff;

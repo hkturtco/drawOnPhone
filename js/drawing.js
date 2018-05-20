@@ -67,7 +67,7 @@ var eraseLine = {
 };
 
 var changedColor = {
-	do: (ctx, color, value, width, height) => {
+	do: (ctx, color, value, width, height, origZoom) => {
 		let imageData = ctx.getImageData(0, 0, width, height).data;
 		let rgbData = [];
 		for (var i = 0; i < imageData.length; i+=4) {
@@ -80,11 +80,11 @@ var changedColor = {
 				g = rgbData[i*width+j][1];	
 				b = rgbData[i*width+j][2];		
 				if(color == "r"){
-					r = rgbData[i*width+j][0] * value/ 100 > 255? 255: rgbData[i*width+j][0] * value/ 100;
+					r = rgbData[i*width+j][0] * value / 100 > 255? 255: rgbData[i*width+j][0] * value / 100;
 				} else if (color == "g") {
-					g = rgbData[i*width+j][1] * value/ 100 > 255? 255: rgbData[i*width+j][1] * value/ 100;
+					g = rgbData[i*width+j][1] * value / 100 > 255? 255: rgbData[i*width+j][1] * value / 100;
 				} else if (color == "b"){
-					b = rgbData[i*width+j][2] * value/ 100 > 255? 255: rgbData[i*width+j][2] * value/ 100 ;
+					b = rgbData[i*width+j][2] * value / 100 > 255? 255: rgbData[i*width+j][2] * value/ 100 ;
 				}
 				ctx.fillStyle = "rgba("+r+","+g+","+b+", 1)"; 
 				ctx.fillRect( j, i, 1, 1 );
