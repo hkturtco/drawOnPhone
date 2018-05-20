@@ -166,7 +166,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				}
 			    ctx.drawImage(fileImage, 0,0, width, height);
 			}
-			
+
 			fileImage.src = URL.createObjectURL(e.target.files[0]);
 			
 		},

@@ -8,14 +8,21 @@
 		<link rel="stylesheet" type="text/css" href="style/css/toolbar.css">
 		<link rel="stylesheet" type="text/css" href="style/css/drawingPad.css"> 
 		<link rel="stylesheet" type="text/css" href="style/css/prompt.css">
+		<link rel="stylesheet" href="style/css/fontawesome-all.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link rel="manifest" href="manifest.json">
 		<script src="js/drawingPadInit.js"></script>
 		<script src="js/drawing.js"></script>
 	</head>
 
 	<body>
+		<script>
+		if('serviceWorker' in navigator) {
+		  navigator.serviceWorker
+		           .register('sw.js')
+		           .then(function() { console.log("Service Worker Registered"); });
+		}
+		</script>
 		<div id="main">
 			<div id="toolbar">
 				<div id="titlebar">
