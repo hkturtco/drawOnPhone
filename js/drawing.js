@@ -39,17 +39,90 @@ var drawSquare = {
 };
 
 var drawLine = {
-	do: (mode, ctx, x, y, preX, preY, lineWidth) => {
+	do: (mode, ctx, x, y, preX, preY, lineWidth, preLineWidth) => {
+		if(mode){
+			// let oriPreX = preX;
+			// let oriPreY = preY;
+			// let lineWidthStep = (lineWidth - preLineWidth) / (Math.max(Math.abs(preX- x), Math.abs(preY - y)));
+			// while( x !== oriPreX || y !== oriPreY){
+
+			// 	if( preX > x){
+			// 		preX -= 1;
+			// 	} else if( preX < x){
+			// 		preX += 1;
+			// 	} 
+
+			// 	if( preY > y){
+			// 		preY -= 1;
+			// 	} else if( preY < y){
+			// 		preY += 1;
+			// 	} 
+			// 	console.log(lineWidth);
+				ctx.beginPath();
+				ctx.moveTo(preX, preY);
+				ctx.save();
+				ctx.strokeStyle = "#000";
+				ctx.lineWidth = preLineWidth + 0.1;
+				ctx.lineTo(preX + ((x - preX)/4), preY+ ((y - preY)/4));
+				ctx.stroke();
+				ctx.closePath();
+				ctx.restore();
+
+				ctx.beginPath();
+				ctx.moveTo(preX + ((x - preX)/4), preY+ ((y - preY)/4));
+				ctx.save();
+				ctx.strokeStyle = "#000";
+				ctx.lineWidth = preLineWidth + 0.2;
+				ctx.lineTo(preX + ((x - preX)*2/4), preY+ ((y - preY)*2/4));
+				ctx.stroke();
+				ctx.closePath();		
+				ctx.restore();
+
+				ctx.beginPath();
+				ctx.moveTo(preX + ((x - preX)*2/4), preY+ ((y - preY)*2/4));
+				ctx.save();
+				ctx.strokeStyle = "#000";
+				ctx.lineWidth = preLineWidth + 0.3;
+				ctx.lineTo(preX + ((x - preX)*3/4), preY+ ((y - preY)*3/4));
+				ctx.stroke();
+				ctx.closePath();		
+				ctx.restore();
+
+				ctx.beginPath();
+				ctx.moveTo(preX + ((x - preX)*3/4), preY+ ((y - preY)*3/4));
+				ctx.save();
+				ctx.strokeStyle = "#000";
+				ctx.lineWidth = lineWidth;
+				ctx.lineTo(x, y);
+				ctx.stroke();
+				ctx.closePath();		
+				ctx.restore();
+				
+			// 	if(lineWidth > preLineWidth){
+			// 		preLineWidth += lineWidthStep;
+			// 	}
+			// 	oriPreX = preX;
+			// 	oriPreY = preY;
+			// }
+
+			ctx.beginPath();
+			ctx.save();
+			ctx.fillStyle = "#000";
+			ctx.arc(x, y, lineWidth/2, 0, 2*Math.PI);
+			ctx.fill();
+			ctx.restore();
+		}
+	},
+	end: (mode, ctx, x, y, lineWidth) =>{
 		if(mode){
 			ctx.beginPath();
-			ctx.moveTo(preX, preY);
 			ctx.save();
-			ctx.lineWidth = lineWidth;
-			ctx.lineTo(x, y);
-			ctx.lineTo(x, y);
-			ctx.stroke();
-			ctx.closePath();
+			ctx.fillStyle = "#000";
+			ctx.arc(x, y, (lineWidth/2)+0.2, 0, 2*Math.PI);
+			ctx.fill();
 			ctx.restore();
+
+
 		}
 	}
 };

@@ -45,6 +45,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		squareMode: false,
 		eraseMode: false,
 		lineWidth: 0,
+		preLineWidth: 0,
 		touchstartEvent: (event) => {
 			drawingPad.touching = true;
 			let ctx = drawingPadVar.context;
@@ -56,7 +57,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			drawingPad.startY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
 			drawingPad.preX = event.pageX - drawingPadVar.offsetH || event.touches[0].pageX-drawingPadVar.offsetH;
 			drawingPad.preY = event.pageY - drawingPadVar.offsetV || event.touches[0].pageY-drawingPadVar.offsetV;
-			drawingPad.lineWidth = 0.1;
+			drawingPad.preLineWidth = 0.1;
 
 			console.log(">>>");
 		},
@@ -75,19 +76,18 @@ window.addEventListener('DOMContentLoaded', function () {
 				let diffY = Math.abs(curY- startY);
 				let preX = drawingPad.preX;
 				let preY = drawingPad.preY;
-				let lineWidth = drawingPad.lineWidth;
+				let lineWidth = drawingPad.preLineWidth < 3? drawingPad.preLineWidth + 0.4 : drawingPad.preLineWidth;
+				let preLineWidth = drawingPad.preLineWidth;
 				
 				drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
 				drawSquare.render(drawingPad.squareMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
-				drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY, lineWidth);
+				drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY, lineWidth, preLineWidth);
 				eraseLine.do(drawingPad.eraseMode, ctx, curX, curY, preX, preY);
 
-				drawingPad.endX = curX;
-				drawingPad.endY = curY;
 				drawingPad.preX = curX;
 				drawingPad.preY = curY;
-				drawingPad.lineWidth = lineWidth < 3? lineWidth + 0.8 : lineWidth;
-				console.log("---",  drawingPad.startX, drawingPad.startY);
+				drawingPad.preLineWidth = lineWidth;
+				console.log("---",  lineWidth, preLineWidth);
 			}
 		},
 		touchendEvent: (event) => {
@@ -95,11 +95,14 @@ window.addEventListener('DOMContentLoaded', function () {
 			let ctx = drawingPadVar.context;
 			let startX = drawingPad.startX;
 			let startY = drawingPad.startY;
-			let endX = drawingPad.endX;
-			let endY = drawingPad.endY;
-			let diffX = Math.abs(endX - startX);
-			let diffY = Math.abs(endY-startY);
+			let preX = drawingPad.preX;
+			let preY = drawingPad.preY;
+			let diffX = Math.abs(preX - startX);
+			let diffY = Math.abs(preY-startY);
+			let lineWidth = drawingPad.preLineWidth;
+			
 
+			drawLine.end(drawingPad.penMode, ctx, preX, preY, lineWidth);
 			drawCircle.do(drawingPad.circleMode, ctx, startX, startY, diffX, diffY);
 			drawSquare.do(drawingPad.squareMode, ctx, startX, startY, diffX, diffY);
 
