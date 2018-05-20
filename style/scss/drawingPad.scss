@@ -1,12 +1,22 @@
 #drawingPad{
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
 
 	#drawingPadCanvas {
 		border: 1px solid #888;
 		border-radius: 5px;
 		touch-action: none;
+	}
+
+	#rgbInput {
+		display: flex;
+		flex-wrap: nowrap;
+		z-index: 100;
+
+		input {
+			width: 100px;
+		}
 	}
 }

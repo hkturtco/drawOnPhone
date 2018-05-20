@@ -16,6 +16,8 @@ window.addEventListener('DOMContentLoaded', function () {
 		startY: 0,
 		endX: 0,
 		endY: 0,
+		preX: 0,
+		preY: 0,
 		savedImage: null,
 		penMode: false,
 		circleMode: false,
@@ -30,10 +32,13 @@ window.addEventListener('DOMContentLoaded', function () {
 			drawingPad.savedImage = ctx.getImageData(0, 0, width, height);
 			drawingPad.startX = event.touches[0].pageX-drawingPadVar.offsetH;
 			drawingPad.startY = event.touches[0].pageY-drawingPadVar.offsetV;
+			drawingPad.preX = event.touches[0].pageX-drawingPadVar.offsetH;
+			drawingPad.preY = event.touches[0].pageY-drawingPadVar.offsetV;
 
 			console.log(">>>");
 		},
 		touchmoveEvent: (event) => {
+			event.preventDefault();
 			let startX = drawingPad.startX;
 			let startY = drawingPad.startY;
 			let curX = event.touches[0].pageX-drawingPadVar.offsetH;
@@ -43,12 +48,18 @@ window.addEventListener('DOMContentLoaded', function () {
 			let ctx = drawingPadVar.context;
 			let diffX = Math.abs(curX - startX);
 			let diffY = Math.abs(curY- startY);
-			let r = diffX > diffY ? diffX : diffY;
+			let preX = drawingPad.preX;
+			let preY = drawingPad.preY;
+			
+			drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
+			drawSquare.render(drawingPad.squareMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
+			drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY);
+			eraseLine.do(drawingPad.eraseMode, ctx, curX, curY, preX, preY);
 
 			drawingPad.endX = curX;
 			drawingPad.endY = curY;
-			drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, drawingPad.startX, drawingPad.startY, r, width,height);
-
+			drawingPad.preX = curX;
+			drawingPad.preY = curY;
 			console.log("---",  drawingPad.startX, drawingPad.startY);
 		},
 		touchendEvent: (event) => {
@@ -60,15 +71,15 @@ window.addEventListener('DOMContentLoaded', function () {
 			let endY = drawingPad.endY;
 			let diffX = Math.abs(endX - startX);
 			let diffY = Math.abs(endY-startY);
-			let r = diffX > diffY ? diffX : diffY;
 
-			drawCircle.do(drawingPad.circleMode, ctx, startX, startY, r);
+			drawCircle.do(drawingPad.circleMode, ctx, startX, startY, diffX, diffY);
+			drawSquare.do(drawingPad.squareMode, ctx, startX, startY, diffX, diffY);
 
 			console.log("<<<");
 		},
 		switchMode: (e) => {
 			let ele = e.currentTarget;
-			let siblingEles = e.currentTarget.parentElement.children;
+			let siblingEles = ele.parentElement.children;
 
 			if(ele.classList.contains("on")){
 				ele.classList.remove("on");
@@ -100,19 +111,89 @@ window.addEventListener('DOMContentLoaded', function () {
 					break;
 			}
 		},
+		importImgButt: (e) => {
+			let ele = e.currentTarget;
+			let inputEle = ele.parentElement.children[0];
+			inputEle.click();
+		},
+		importImg: (e) => {
+			let fileImage = new Image();
+			let ctx = drawingPadVar.context;
+
+			fileImage.onload = function() {
+				let width, height = 0;
+				if(fileImage.width > 300){
+					zoom = 300 / fileImage.width;
+					width = 300;
+					height = fileImage.height * zoom;
+				}
+			    ctx.drawImage(fileImage, 0,0, width, height);
+			}
+
+			fileImage.src = URL.createObjectURL(e.target.files[0]);
+			
+		},
+		changeRGB: (e) => {
+			let ele = e.currentTarget;
+			let ctx = drawingPadVar.context;
+			let width = drawingPadVar.width;
+			let height = drawingPadVar.height;
+			console.log(e.currentTarget.value);
+			switch(ele.id){
+				case "rColor":
+					changedColor.do(ctx, "r", e.currentTarget.value, width, height);
+					break;
+				case "gColor":
+					changedColor.do(ctx, "g", e.currentTarget.value, width, height);
+					break;
+				case "bColor":
+					changedColor.do(ctx, "b", e.currentTarget.value, width, height);
+					break;
+			}
+		},
 		init: () => {
-			let toolbarPenButt = document.getElementById("toolbarPenButt");
-			let toolbarCircleButt = document.getElementById("toolbarCircleButt");
-			let toolbarSqaureButt = document.getElementById("toolbarSqaureButt");
-			let toolbarEeaserButt = document.getElementById("toolbarEeaserButt");
+
+			let ctx = drawingPadVar.context;
+			let width = drawingPadVar.width;
+			let height = drawingPadVar.height;
+
+			for(var i=0; i< height; i++){
+				for(var j=0; j< width; j++){
+					r = 255;
+					g = 255;	
+					b = 255;		
+					ctx.fillStyle = "rgba("+r+","+g+","+b+", 1)"; 
+					ctx.fillRect( j, i, 1, 1 );
+				}
+			}
+			const toolbarPenButt = document.getElementById("toolbarPenButt");
+			const toolbarCircleButt = document.getElementById("toolbarCircleButt");
+			const toolbarSqaureButt = document.getElementById("toolbarSqaureButt");
+			const toolbarEeaserButt = document.getElementById("toolbarEeaserButt");
+			const filegetButt = document.getElementById("filegetButt");
+			const fileInput = document.getElementById('imageInput');
+			const rColor = document.getElementById('rColor');
+			const gColor = document.getElementById('gColor');
+			const bColor = document.getElementById('bColor');
 
 			toolbarPenButt.addEventListener("click", drawingPad.switchMode);
 			toolbarCircleButt.addEventListener("click", drawingPad.switchMode);
 			toolbarSqaureButt.addEventListener("click", drawingPad.switchMode);
 			toolbarEeaserButt.addEventListener("click", drawingPad.switchMode);
+
+			filegetButt.addEventListener("click", drawingPad.importImgButt);
+			fileInput.addEventListener("change", drawingPad.importImg);
+
+			rColor.addEventListener("change", drawingPad.changeRGB);
+			gColor.addEventListener("change", drawingPad.changeRGB);
+			bColor.addEventListener("change", drawingPad.changeRGB);
+
 			drawingPadVar.canvas.addEventListener("touchstart", drawingPad.touchstartEvent);
+			//drawingPadVar.canvas.addEventListener("mousedown", drawingPad.touchstartEvent);
 			drawingPadVar.canvas.addEventListener("touchmove", drawingPad.touchmoveEvent);
-			drawingPadVar.canvas.addEventListener("touchend", drawingPad.touchendEvent);
+			//drawingPadVar.canvas.addEventListener("mousemove", drawingPad.touchmoveEvent);
+			drawingPadVar.canvas.addEventListener("mouseup", drawingPad.touchendEvent);
+			//drawingPadVar.canvas.addEventListener("touchend", drawingPad.touchendEvent);
 
 		}
 	};

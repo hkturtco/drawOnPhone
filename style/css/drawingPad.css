@@ -1,10 +1,17 @@
 #drawingPad {
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  flex-direction: column; }
   #drawingPad #drawingPadCanvas {
     border: 1px solid #888;
     border-radius: 5px;
     touch-action: none; }
+  #drawingPad #rgbInput {
+    display: flex;
+    flex-wrap: nowrap;
+    z-index: 100; }
+    #drawingPad #rgbInput input {
+      width: 100px; }
 
 /*# sourceMappingURL=drawingPad.css.map */
