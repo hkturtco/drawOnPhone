@@ -1,12 +1,18 @@
 #toolbar {
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 0 0 5px 5px;
-  border: 1px solid #888;
+  border-radius: 0 0 0 10px;
+  border-bottom: 1px solid #888;
   position: fixed;
   top: 0;
-  right: 5px;
+  right: 0;
   padding: 5px;
   box-shadow: 2px 2px 5px #333; }
+  #toolbar #titlebar {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px; }
+    #toolbar #titlebar p {
+      margin: 0px; }
   #toolbar #modeButt {
     display: inline-block; }
     #toolbar #modeButt button {
