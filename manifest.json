@@ -1,6 +1,6 @@
 {
-  "name": "DawOnPhone",
-  "short_name": "DawOnPhone",
+  "name": "DrawOnPhone",
+  "short_name": "DrawOnPhone",
   "icons": [{
     "src": "images/icon.png",
       "sizes": "128x128",
