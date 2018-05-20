@@ -44,6 +44,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		circleMode: false,
 		squareMode: false,
 		eraseMode: false,
+		lineWidth: 0,
 		touchstartEvent: (event) => {
 			drawingPad.touching = true;
 			let ctx = drawingPadVar.context;
@@ -55,6 +56,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			drawingPad.startY = event.touches[0].pageY-drawingPadVar.offsetV;
 			drawingPad.preX = event.touches[0].pageX-drawingPadVar.offsetH;
 			drawingPad.preY = event.touches[0].pageY-drawingPadVar.offsetV;
+			drawingPad.lineWidth = 0.1;
 
 			console.log(">>>");
 		},
@@ -71,16 +73,18 @@ window.addEventListener('DOMContentLoaded', function () {
 			let diffY = Math.abs(curY- startY);
 			let preX = drawingPad.preX;
 			let preY = drawingPad.preY;
+			let lineWidth = drawingPad.lineWidth;
 			
 			drawCircle.render(drawingPad.circleMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
 			drawSquare.render(drawingPad.squareMode, ctx, drawingPad.savedImage, startX, startY, diffX, diffY, width, height);
-			drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY);
+			drawLine.do(drawingPad.penMode, ctx, curX, curY, preX, preY, lineWidth);
 			eraseLine.do(drawingPad.eraseMode, ctx, curX, curY, preX, preY);
 
 			drawingPad.endX = curX;
 			drawingPad.endY = curY;
 			drawingPad.preX = curX;
 			drawingPad.preY = curY;
+			drawingPad.lineWidth = lineWidth < 3? lineWidth + 0.8 : lineWidth;
 			console.log("---",  drawingPad.startX, drawingPad.startY);
 		},
 		touchendEvent: (event) => {
@@ -151,14 +155,18 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			fileImage.onload = function() {
 				let width, height = 0;
-				if(fileImage.width > 300){
+				if(fileImage.width < fileImage.height){
 					zoom = 300 / fileImage.width;
 					width = 300;
 					height = fileImage.height * zoom;
+				} else {
+					zoom = 300 / fileImage.height;
+					height = 300;
+					width = fileImage.width * zoom;
 				}
 			    ctx.drawImage(fileImage, 0,0, width, height);
 			}
-
+			
 			fileImage.src = URL.createObjectURL(e.target.files[0]);
 			
 		},

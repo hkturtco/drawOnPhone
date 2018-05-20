@@ -39,13 +39,17 @@ var drawSquare = {
 };
 
 var drawLine = {
-	do: (mode, ctx, x, y, preX, preY) => {
+	do: (mode, ctx, x, y, preX, preY, lineWidth) => {
 		if(mode){
 			ctx.beginPath();
 			ctx.moveTo(preX, preY);
+			ctx.save();
+			ctx.lineWidth = lineWidth;
+			ctx.lineTo(x, y);
 			ctx.lineTo(x, y);
 			ctx.stroke();
 			ctx.closePath();
+			ctx.restore();
 		}
 	}
 };

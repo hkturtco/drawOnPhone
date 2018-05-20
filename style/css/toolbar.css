@@ -10,7 +10,9 @@
     display: inline-block;
     margin-right: 10px; }
     #toolbar #titlebar p {
-      margin: 0px; }
+      margin: 0px;
+      font-weight: bold;
+      text-shadow: 1px 1px 5px #999; }
   #toolbar #modeButt {
     display: inline-block; }
     #toolbar #modeButt button {
